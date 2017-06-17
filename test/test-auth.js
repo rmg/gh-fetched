@@ -5,7 +5,7 @@ const GitHub = require('../');
 
 const maybeSkip = {};
 if (!process.env.GITHUB_TOKEN) {
-  maybeSkip = 'env does not hvae GITHUB_TOKEN set, skipping';
+  maybeSkip.skip = 'env does not hvae GITHUB_TOKEN set, skipping';
 }
 
 test('basic API', maybeSkip, t => {
