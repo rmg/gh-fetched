@@ -23,5 +23,8 @@
   "homepage": "https://github.com/rmg/gh-fetched#readme",
   "devDependencies": {
     "tap": "^10.3.4"
+  },
+  "dependencies": {
+    "make-fetch-happen": "^2.4.12"
   }
 }
