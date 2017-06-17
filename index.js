@@ -6,6 +6,7 @@ const lo = require('lodash');
 
 const DEFAULTS = {
   root: 'https://api.github.com',
+  cacheManager: null,
 };
 
 class GitHub {
@@ -17,7 +18,10 @@ class GitHub {
     if (this.token) {
       headers['Authorization'] = `token ${this.token}`;
     }
-    this.fetch = fetch.defaults({headers: headers});
+    this.fetch = fetch.defaults({
+      headers: headers,
+      cacheManager: opts.cacheManager,
+    });
     this.quota = {};
   }
 
@@ -27,6 +31,7 @@ class GitHub {
       this.quota['limit'] = 0|res.headers.get('x-ratelimit-limit');
       this.quota['remaining'] = 0|res.headers.get('x-ratelimit-remaining');
       this.quota['reset'] = new Date((0|res.headers.get('x-ratelimit-reset')) * 1000);
+      debug('cache:', res.headers.get('X-Local-Cache'));
       debug('ratelimit:', this.quota);
       return res.json();
     });
