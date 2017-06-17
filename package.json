@@ -22,7 +22,7 @@
   ],
   "main": "index.js",
   "scripts": {
-    "test": "tap --coverage 'test/test-*.js'"
+    "test": "tap --coverage \"test/test-*.js\""
   },
   "devDependencies": {
     "tap": "^10.3.4"
