@@ -2,16 +2,15 @@
 
 const fetch = require('make-fetch-happen');
 
-module.exports = GitHub;
-
-function GitHub() {
-  if (!(this instanceof GitHub)) {
-    return new GitHub();
+class GitHub {
+  constructor() {
+    this.root = 'https://api.github.com';
   }
-  this.root = 'https://api.github.com';
+
+  get(reqPath) {
+    let reqUrl = this.root + reqPath;
+    return fetch(reqUrl).then(res => res.json());
+  }
 }
 
-GitHub.prototype.get = function get(reqPath) {
-  let reqUrl = this.root + reqPath;
-  return fetch(reqUrl).then(res => res.json());
-}
+module.exports = GitHub;
