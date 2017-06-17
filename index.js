@@ -10,7 +10,7 @@ const DEFAULTS = {
 
 class GitHub {
   constructor(opts) {
-    opts = lo.defaults(DEFAULTS, opts);
+    opts = lo.defaults(opts, DEFAULTS);
     this.root = opts.root;
     this.token = opts.token;
     let headers = {};
