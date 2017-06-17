@@ -4,7 +4,7 @@
   "description": "GitHub API client with caching",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "tap --coverage 'test/test-*.js'"
   },
   "repository": {
     "type": "git",
@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/rmg/gh-fetched/issues"
   },
-  "homepage": "https://github.com/rmg/gh-fetched#readme"
+  "homepage": "https://github.com/rmg/gh-fetched#readme",
+  "devDependencies": {
+    "tap": "^10.3.4"
+  }
 }
