@@ -25,7 +25,7 @@ class GitHub {
     let reqUrl = this.root + reqPath;
     return this.fetch(reqUrl).then(res => {
       this.quota['limit'] = 0|res.headers.get('x-ratelimit-limit');
-      this.quota['remaining'] = 0|res.headers.get('x-ratelimit-limit');
+      this.quota['remaining'] = 0|res.headers.get('x-ratelimit-remaining');
       this.quota['reset'] = new Date((0|res.headers.get('x-ratelimit-reset')) * 1000);
       debug('ratelimit:', this.quota);
       return res.json();
