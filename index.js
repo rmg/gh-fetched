@@ -3,6 +3,7 @@
 const debug = require('debug')('gh-fetched');
 const fetch = require('make-fetch-happen');
 const lo = require('lodash');
+const url = require('url');
 
 const DEFAULTS = {
   root: 'https://api.github.com',
@@ -25,8 +26,7 @@ class GitHub {
     this.quota = {};
   }
 
-  get(reqPath) {
-    let reqUrl = this.root + reqPath;
+  _get(reqUrl) {
     return this.fetch(reqUrl).then(res => {
       this.quota['limit'] = 0|res.headers.get('x-ratelimit-limit');
       this.quota['remaining'] = 0|res.headers.get('x-ratelimit-remaining');
@@ -35,6 +35,29 @@ class GitHub {
       debug('ratelimit:', this.quota);
       return res.json();
     });
+  }
+
+  get(reqPath) {
+    return this._get(this.root + reqPath);
+  }
+
+  getAll(reqPath) {
+    let reqUrl = url.parse(this.root + reqPath);
+    reqUrl.query = {
+      per_page: 100,
+      page: 1,
+    };
+    let collection = [];
+    let getPage = (r) => {
+      collection = collection.concat(r);
+      if (r.length === reqUrl.query.per_page) {
+        reqUrl.query.page++;
+        return this._get(url.format(reqUrl)).then(getPage);
+      } else {
+        return collection;
+      }
+    }
+    return this._get(url.format(reqUrl)).then(getPage);
   }
 }
 
